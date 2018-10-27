@@ -1,0 +1,116 @@
+\documentclass[addpoints]{exam}
+\usepackage{url}
+\usepackage{amsmath,amsthm,enumitem}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{qtree}
+\usepackage[nodayofweek,level]{datetime}
+\usepackage{color}
+\usepackage{csquotes}
+\usepackage{pgf, tikz}
+\usetikzlibrary{arrows, automata}
+\usepackage{algorithm,algpseudocode}
+\usepackage{graphicx}
+\usetikzlibrary{positioning}
+\usetikzlibrary{calc,arrows.meta,positioning}
+
+\tikzset{
+    every node/.style={font=\sffamily\small},
+    main node/.style={thick,circle,draw,font=\sffamily\Large}
+}
+\newtheorem*{claim}{Claim}
+\definecolor{qcolor}{rgb}{0, 0, 0.3}
+\definecolor{acolor}{rgb}{0, 0, 0}
+%\input myfonts
+\qformat{Question \thequestion: \thequestiontitle\dotfill \textbf{[\totalpoints]}}
+\pointname{}
+\bonuspointname{}
+\pointformat{[\bfseries\thepoints]}
+
+\lhead{Gopal Menon (u0772360)}
+\chead{\bf{HW4}}
+\rhead{CS 6150 \today}
+\headrule
+
+\begin{document}
+
+\section*{Collaborators}
+
+Ben Nelson, Corbin Baldwin and I collaborated for this assignment.
+
+\begin{questions}
+\titledquestion{Balls and bins}
+Consider the process we saw in class, of distributing $n$ balls into $n$ bins, independently and uniformly at random.
+\begin{parts}
+\part[4] What is the expected number of empty bins?
+\part[2] Show that the probability that $80\%$ of the bins are empty is $\le 1/2$. 
+\part[2] Let $X_i$ be the random variable that is $1$ if bin $i$ is empty and is $0$ otherwise.  Are $X_1$ and $X_2$ independent? Give an intuitive reasoning.
+\part[4] Let $Z$ be the random variable defined by $Z = \sum_i X_i$ (i.e., the number of empty bins). Suppose you are told that the variance of $Z$ is $\le n$.  Use this to prove that the probability that $80\%$ of the bins are empty is $< 8/n$.  [Note that this is a much better bound than the one in part (b) when $n$ is large.]
+\end{parts}
+
+\begin{parts}
+
+\part
+
+\part
+
+\part
+
+\part
+
+\end{parts}
+
+\titledquestion{Median/order finding}
+Consider the following simple algorithm for finding the $k$th smallest element in a given unsorted array $A[1], A[2], \dots, A[n]$ (assume that all the $A[i]$ are distinct):
+\begin{enumerate}
+\item pick a uniformly random index $i \in \{1, 2, \dots, n\}$
+\item divide the array $A[]$ into two sub-arrays -- $B[]$ and $C[]$, where the elements of $B[]$ are all $\le A[i]$ and the elements of $C[]$ are $> A[i]$. 
+\item if length$(B) \le k$, we recursively find the $k$th smallest element in $B[]$; else we find the $k - \text{length}(B)$'th smallest element in $C[]$.
+\end{enumerate}
+
+\begin{parts}
+\part[2] Prove that the running time on the array $A$ of length $n$ can be bounded as
+\[ T(n)  \le \max\{ T(\text{length}(B)), T(\text{length}(C)) \} + O(n). \]
+\part[3] Give an input $A, k$, and an unlucky choice of indices $i$ that leads to a running time larger than $n^2/4$.
+\part[5] Let $f(n)$ denote the {\em expected running time} on an input array of length $n$.  Derive a ``probabilistic recurrence'' analogous to the one we saw in class for quicksort, and show that $f(n) = O(n)$. [{\em Hint:} use part (a).]
+\end{parts}
+
+\titledquestion{Quicksort revisited}
+Recall the quicksort procedure we saw in class, where we pick a random element of the input array as the {\em pivot}, recursively sort the elements less than and larger than the pivot, and concatenate the solutions.  We saw that the expected running time is $O(n \log n)$.  
+
+\begin{parts}
+\part[2] Using a basic implementation (base case being a singleton), find the {\em constant} in the $O()$ notation for the algorithm above. (You may do this by picking any array, repeatedly running the procedure above, and averaging the values of running time divided by $n \log n$.)
+\part[2]  Now, consider the following procedure: for $k=1, 2, 3$, first pick $(2k+1)$ random indices, and choose their {\em median} as the pivot. Now report the constant in the $O()$ notation. 
+\part[2] Explain your observations intuitively.
+\end{parts}
+
+\titledquestion{Checking matrix multiplication}
+Matrix multiplication is one of the classic algorithmic problems.  Consider the problem of multiplying two $n \times n$ matrices over the field $\mathbf{F}_2$ (i.e., we have matrices with entries $0/1$, and we perform all computations modulo $2$; e.g., 0*0 + 1*1 + 1*1 + 1*0 = 0).
+
+The best known algorithms here are messy and take time $O(n^{2.36...})$.  However, the point of this exercise is to prove a simpler statement. Suppose someone gives a matrix $C$ and claims that $C = AB$, can we {\em quickly verify} if the claim is true?
+
+\begin{parts}
+\part[4] First prove a warm-up statement: suppose $a$ and $b$ are any two $0/1$ vectors of length $n$, and suppose that $a \ne b$.  Then, for a random binary vector $x \in \{0,1\}^n$ (one in which each coordinate is chosen uniformly at random), prove that $\Pr [ \langle a, x\rangle = \langle b, x\rangle~ (\text{mod } 2)] = 1/2$.
+\part[6] Now, design an $O(n^2)$ time algorithm that tests if $C = AB$ and has a success probability $\ge 1/2$. (You need to prove the probability bound.)
+\part[2] Show how to improve the success probability to $7/8$ while still having running time $O(n^2)$.
+\end{parts}
+
+\titledquestion{Coloring graphs}
+One of the popular problems in graph theory is that of graph coloring: we are given an undirected graph $G = (V, E)$, and the aim is to assign each vertex $u$ a {\em color} $c(u)$, with the guarantee that for any edge $u, v$, $c(u) \ne c(v)$.  (I.e., end-points of edges must receive different colors.) The goal is to color the graph using the fewest total number of colors, subject to the above condition.
+
+Coloring is known to be a very hard problem. Suppose we are OK with something weaker: suppose that we consider an assignment of colors {\em acceptable} if $c(u) \ne c(v)$ holds for $\ge 90\%$ of the edges.
+
+\begin{parts}
+\part[7] Suppose that we {\em randomly} assign a color in the range $\{1, 2, \dots, 20\}$ to the vertices.  Prove that we obtain an acceptable assignment with probability $\ge 1/2$.  (Note that the algorithm is quite remarkable -- it doesn't even look at the edges of the graph!)
+\part[3] What happens above when we randomly assign colors in the range $\{1, 2, \dots, 11\}$? Can we still obtain an algorithm that succeeds with probability $\ge 1/2$? 
+\end{parts}
+
+\end{questions}
+
+\begin{thebibliography}{9}
+
+\bibitem{CLRS} \enquote{24. Single-Source Shortest Paths.} \textit{Introduction to Algorithms}, by Thomas H. Cormen et al., MIT Press, 2009, pp. 648-662.
+
+\end{thebibliography}
+
+\end{document}
