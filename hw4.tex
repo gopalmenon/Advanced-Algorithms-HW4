@@ -1,6 +1,7 @@
 \documentclass[addpoints]{exam}
 \usepackage{url}
 \usepackage{amsmath,amsthm,enumitem}
+\usepackage{mathtools}
 \usepackage{amssymb}
 \usepackage{graphicx}
 \usepackage{qtree}
@@ -50,8 +51,25 @@ Consider the process we saw in class, of distributing $n$ balls into $n$ bins, i
 
 \begin{parts}
 
-\part
-
+\part 
+\begin{equation*}
+\begin{aligned}
+    \text{Let random variable } X_i &= 
+\begin{dcases}
+    1,& \text{when slot } i \text{ is empty}\\
+    0,              & \text{otherwise}
+\end{dcases}\\
+\text{Number of empty bins} &= \sum_{i=1}^n X_i\\
+\mathbb{E} \left [ \text{Number of empty bins} \right ] &= \mathbb{E} \left [ \sum_{i=1}^n X_i \right ] \\
+&= \sum_{i=1}^n \mathbb{E} \left [ X_i \right ] \text{, due to linearity of expectation}\\
+&= \sum_{i=1}^n \left ( 1 \times \Pr \left [ X_i =1 \right ]  + 0 \times \Pr \left [ X_i =0 \right ] \right )\\
+&= \sum_{i=1}^n \Pr \left [ X_i =1 \right ] \\ 
+&= \sum_{i=1}^n \frac{(n-1)^n}{n^n} \\
+\text{since } n \text{ balls can be put into } &n-1 \text{ slots in } (n-1)^n \text{ ways and } n \text{ balls can be put into } n \text{ slots in } n^n \text{different ways}\\
+&= n \frac{(n-1)^n}{n^n} \\
+&= \frac{(n-1)^n}{n^{n-1}}
+\end{aligned}
+\end{equation*}
 \part
 
 \part
