@@ -95,9 +95,23 @@ Consider the process we saw in class, of distributing $n$ balls into $n$ bins, i
 \end{equation*}
 
 Since $\frac{dy}{dn} > 0$ for $n>1$ and $\lim_{n \to \infty} y < \frac{1}{2}$, $\Pr \left [80\% \text{ of the bins are empty} \right ] <  \frac{1}{2}$.
-\part
 
-\part
+\part If bin 1 is known to be empty, then there is a higher chance that bin 2 is not empty, since all of the $n$ balls would have been assigned to the $n-1$ remaining buckets. This means that $X_1$ and $X_2$ are not independent random variables.
+
+\part \begin{equation*}
+\begin{aligned}
+\Pr \left [80\% \text{ of the bins are empty} \right ] &= \Pr \left [ \text{Number of empty bins } \geq 0.8n\right ]\\
+&=  \Pr \left [ Z \geq 0.8n\right ] \\
+&= \Pr \left [ Z - \mathbb{E} \left [ Z \right ] \geq 0.8n - \mathbb{E} \left [ Z \right ] \right ] \\
+&= \Pr \left [ Z - \mathbb{E} \left [ Z \right ] \geq \frac{0.8n - \mathbb{E} \left [ Z \right ]}{\sigma} \sigma \right ] \text{, where } \sigma^2 \text{ is the variance of } Z\\
+&\leq \frac{1}{\left (\frac{0.8n - \mathbb{E} \left [ Z \right ]}{\sigma} \right )^2}   \text{ , by Chebychev's inequality}\\
+&= \frac{\sigma^2}{\left ( 0.8n - \mathbb{E} \left [ Z \right ] \right )^2}\\
+&\leq  \frac{n}{\left (0.8n -  \frac{(n-1)^n}{n^{n-1}} \right )^2}\\
+&= \frac{nn^{2n-2}}{\left (0.8 n n ^{n-1} -(n-1)^n \right )^2}\\
+&= \frac{n^{2n-1}}{\left (0.8 n ^n -(n-1)^n \right )^2}\\
+&= \frac{n^{2n-1}}{0.64n^{2n} -1.6n^n(n-1)^n +(n-1)^{2n}}\\
+\end{aligned}
+\end{equation*}
 
 \end{parts}
 
