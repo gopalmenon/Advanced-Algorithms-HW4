@@ -120,7 +120,7 @@ Consider the following simple algorithm for finding the $k$th smallest element i
 \begin{enumerate}
 \item pick a uniformly random index $i \in \{1, 2, \dots, n\}$
 \item divide the array $A[]$ into two sub-arrays -- $B[]$ and $C[]$, where the elements of $B[]$ are all $\le A[i]$ and the elements of $C[]$ are $> A[i]$. 
-\item if length$(B) \le k$, we recursively find the $k$th smallest element in $B[]$; else we find the $k - \text{length}(B)$'th smallest element in $C[]$.
+\item if length$(B) \geq k$, we recursively find the $k$th smallest element in $B[]$; else we find the $k - \text{length}(B)$'th smallest element in $C[]$.
 \end{enumerate}
 
 \begin{parts}
@@ -151,13 +151,39 @@ The best known algorithms here are messy and take time $O(n^{2.36...})$.  Howeve
 \end{parts}
 
 \titledquestion{Coloring graphs}
-One of the popular problems in graph theory is that of graph coloring: we are given an undirected graph $G = (V, E)$, and the aim is to assign each vertex $u$ a {\em color} $c(u)$, with the guarantee that for any edge $u, v$, $c(u) \ne c(v)$.  (I.e., end-points of edges must receive different colors.) The goal is to color the graph using the fewest total number of colors, subject to the above condition.
+One of the popular problems in graph theory is that of graph coloring: we are given an undirected graph $G = (V, E)$, and the aim is to assign each vertex $u$ a {\em color} $c(u)$, with the guarantee that for any edge $u, v$, $c(u) \ne c(v)$.  (i.e., end-points of edges must receive different colors.) The goal is to color the graph using the fewest total number of colors, subject to the above condition.
 
 Coloring is known to be a very hard problem. Suppose we are OK with something weaker: suppose that we consider an assignment of colors {\em acceptable} if $c(u) \ne c(v)$ holds for $\ge 90\%$ of the edges.
 
 \begin{parts}
 \part[7] Suppose that we {\em randomly} assign a color in the range $\{1, 2, \dots, 20\}$ to the vertices.  Prove that we obtain an acceptable assignment with probability $\ge 1/2$.  (Note that the algorithm is quite remarkable -- it doesn't even look at the edges of the graph!)
 \part[3] What happens above when we randomly assign colors in the range $\{1, 2, \dots, 11\}$? Can we still obtain an algorithm that succeeds with probability $\ge 1/2$? 
+\end{parts}
+
+\begin{parts}
+
+\part \begin{equation*}
+\begin{aligned}
+    \text{Let random variable } E_i &= 
+\begin{dcases}
+    1,& \text{when vertices at the two ends of edge } E_i \text{ are of different colors}\\
+    0,              & \text{otherwise}
+\end{dcases}\\
+\text{Let } E_T \text{ be the number}&\text{ of edges where vertices at the two ends are of different colors}\\
+\mathbb{E} \left [ E_T \right ] &= \mathbb{E} \left [ \sum_{i=1}^n E_i \right ] \text{, where } n \text{ is the number of vertices}\\
+&= \sum_{i=1}^n \mathbb{E} \left [  E_i \right ] \text{, by linearity of Expectation}\\
+&= \sum_{i=1}^n \left ( 1\times \Pr \left[ E_i = 1 \right ] + 0 \times \Pr \left[ E_i = 0 \right ] \right )\\
+&= \sum_{i=1}^n \Pr \left[ E_i = 1 \right ]\\
+&= \sum_{i=1}^n \frac{19}{20} \text{, as once a color is assigned to a vertex, one of } 19 \text{ can be assigned to the other}\\
+&= \frac{19}{20}n\\
+&= 0.95n
+\end{aligned}
+\end{equation*}
+
+Since the expected value or mean of the number of edges where vertices at the two ends are of different colors is $ 0.95n$, the probability that the number of edges where vertices at the two ends are of different colors is $\geq 0.95n$ is $\frac{1}{2}$. This means that the probability that the number of edges where vertices at the two ends are of different colors is the $\geq 0.90n$ is definitely $\geq \frac{1}{2}$ since this covers more than half the probability mass. 
+
+\part In the case where we randomly assign colors in the range $\{1, 2, \dots, 11\}$, $\mathbb{E} \left [ E_T \right ] = \frac{10}{11}n = 0.91n$ based on a computation similar to the one shown above. So the the probability that the number of edges where vertices at the two ends are of different colors is the $\geq 0.90n$ is definitely $\geq \frac{1}{2}$ since this covers more than half the probability mass.
+
 \end{parts}
 
 \end{questions}
