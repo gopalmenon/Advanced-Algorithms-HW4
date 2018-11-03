@@ -156,7 +156,26 @@ Since length(first sub-array)$=1<2$, we need to find the $2-1=1^{st}$ smallest e
 We get $9$ as the answer, which is the $k = 7^{th}$ smallest element in the original array $A = \{6,2,5,4,3,1,9\}$\\
 
 If we add up the lengths of the arrays worked on, each in $O(n)$ time, we get $7+6+5+4+3+2=27>\frac{n^2}{4}=\frac{7^2}{4}=\frac{49}{4}=12.25$.
-\part
+
+\part Consider the base case of an array of length $0$. $T(1)=O(1)$ since it takes constant time to kind the $1^{st}$ smallest element in the array. Since the recurrence is bounded as 
+\[ T(n)  \le \max\{ T(\text{length}(B)), T(\text{length}(C)) \} + O(n). \]
+
+Consider the case where array $B$ has a length of $n-r$ and array $C$ has a length on $r$. The recurrence will be
+\[ T(n)  \le \max\{ T(n-r), T(r) \} + O(n). \]
+
+\begin{equation*}
+\begin{aligned}
+\mathbb{E} \left [ T(n) \right ] & \leq \sum_{r=0}^n \Pr \left [ r \right ] \left (\max\{ T(n-r), T(r) \} + O(n) \right ), \text{(} r \text{ starts at } 0 \text{ when largest element is chosen)}\\
+&= \sum_{r=0}^n \frac{1}{n} \left (\max\{ T(n-r), T(r) \} + O(n) \right ) \text{, since the probability of any } r \text{ is } \frac{1}{n}\\
+&= \sum_{r=0}^n \frac{1}{n} \left (\max\{ O(n-r), T(r) \} + O(n) \right ) \text{, assuming }T(n-r) = O(n-r) \text{ and } T(r)=O(r)\\
+&= \sum_{r=0}^n \frac{1}{n} \left (\max\{(n-r), r \} + n \right )\text{, taking the constant to be } 1\\
+&= \frac{1}{n} \left (2\left(\frac{n(n+1)}{2} - \frac{\frac{n}{2}(\frac{n}{2}+1)}{2} \right ) + n^2 \right ) \text{, as we take the larger sub-array for worst case}\\
+&= \frac{1}{n} \left ( n^2 + n - \frac{n^2}{4} -\frac{n}{2} + n^2 \right )\\
+&=\frac{1}{n} \left (\frac{7}{4} n^2  + \frac{n}{2} \right )\\
+&= \frac{7}{4} n + \frac{1}{2} \\
+&= O(n) \qed
+\end{aligned}
+\end{equation*}
 
 \end{parts}
 
