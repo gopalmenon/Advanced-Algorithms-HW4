@@ -100,16 +100,22 @@ Since $\frac{dy}{dn} > 0$ for $n>1$ and $\lim_{n \to \infty} y < \frac{1}{2}$, $
 
 \part \begin{equation*}
 \begin{aligned}
+\mathbb{E} \left [ Z \right ] &= \frac{(n-1)^n}{n^{n-1}} \text{, from part a above}\\
+&= n \frac{(n-1)^n}{n^n}\\
+&= n \left ( 1-\frac{1}{n} \right ) ^n\\
+&< \frac{n}{e} \text{, since } \lim_{n \to \infty} \left ( 1-\frac{1}{n} \right ) ^n = \frac{1}{e}\\
 \Pr \left [80\% \text{ of the bins are empty} \right ] &= \Pr \left [ \text{Number of empty bins } \geq 0.8n\right ]\\
 &=  \Pr \left [ Z \geq 0.8n\right ] \\
 &= \Pr \left [ Z - \mathbb{E} \left [ Z \right ] \geq 0.8n - \mathbb{E} \left [ Z \right ] \right ] \\
 &= \Pr \left [ Z - \mathbb{E} \left [ Z \right ] \geq \frac{0.8n - \mathbb{E} \left [ Z \right ]}{\sigma} \sigma \right ] \text{, where } \sigma^2 \text{ is the variance of } Z\\
 &\leq \frac{1}{\left (\frac{0.8n - \mathbb{E} \left [ Z \right ]}{\sigma} \right )^2}   \text{ , by Chebychev's inequality}\\
-&= \frac{\sigma^2}{\left ( 0.8n - \mathbb{E} \left [ Z \right ] \right )^2}\\
-&\leq  \frac{n}{\left (0.8n -  \frac{(n-1)^n}{n^{n-1}} \right )^2}\\
-&= \frac{nn^{2n-2}}{\left (0.8 n n ^{n-1} -(n-1)^n \right )^2}\\
-&= \frac{n^{2n-1}}{\left (0.8 n ^n -(n-1)^n \right )^2}\\
-&= \frac{n^{2n-1}}{0.64n^{2n} -1.6n^n(n-1)^n +(n-1)^{2n}}\\
+&= \frac{\sigma^2}{\left ( 0.8n - \mathbb{E} \left [ Z \right ] \right ) ^2}\\
+&\leq \frac{n}{\left ( 0.8n - \mathbb{E} \left [ Z \right ] \right ) ^2}\\
+&\leq \frac{n}{\left ( 0.8n - \frac{n}{e} \right) ^2}\\
+&= \frac{ne^2}{n^2\left ( 0.8e - 1 \right)^2}\\
+&= \frac{1}{n}\frac{e^2}{\left ( 0.8e - 1 \right)^2}\\
+&= \frac{5.355}{n}\\
+&< \frac{8}{n} \qed
 \end{aligned}
 \end{equation*}
 
@@ -128,6 +134,25 @@ Consider the following simple algorithm for finding the $k$th smallest element i
 \[ T(n)  \le \max\{ T(\text{length}(B)), T(\text{length}(C)) \} + O(n). \]
 \part[3] Give an input $A, k$, and an unlucky choice of indices $i$ that leads to a running time larger than $n^2/4$.
 \part[5] Let $f(n)$ denote the {\em expected running time} on an input array of length $n$.  Derive a ``probabilistic recurrence'' analogous to the one we saw in class for quicksort, and show that $f(n) = O(n)$. [{\em Hint:} use part (a).]
+\end{parts}
+
+\begin{parts}
+
+\part To divide the array into two sub-arrays, we would need to compare each element with the one corresponding to the position of the randomly chosen index. This will take $O(n)$ time. In the worst case, the element corresponding to the $k^{th}$ smallest element in the original array, would lie in the larger of the two sub-arrays. This means that the running time on the array $A$ of length $n$ can be bounded as $T(n)  \le \max\{ T(\text{length}(B)), T(\text{length}(C)) \} + O(n)$.
+
+\part \begin{equation*}
+\begin{aligned}
+\text{Let } k &= 7 \text{ and}\\
+A &= \{6,2,5,4,3,1,9\} \\
+B&=\{1\} \text{ and } C=\{6,2,5,4,3,9\} \text{ when } i=6\\
+\text{Since }&length(B)=1<k\text{, we need to find the } 7-1=6^{th} \text{ smallest element in } C\\ 
+\{2\} \text{ and } &\{6,5,4,3,9\} \text{ are the two sub-arrays when } i=2\\
+\text{Since }&length(B)=1<6\text{, we need to find the } 7-1=6^{th} \text{ smallest element in } C\\ 
+\end{aligned}
+\end{equation*}
+
+\part
+
 \end{parts}
 
 \titledquestion{Quicksort revisited}
