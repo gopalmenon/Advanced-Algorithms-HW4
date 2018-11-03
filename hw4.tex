@@ -140,17 +140,22 @@ Consider the following simple algorithm for finding the $k$th smallest element i
 
 \part To divide the array into two sub-arrays, we would need to compare each element with the one corresponding to the position of the randomly chosen index. This will take $O(n)$ time. In the worst case, the element corresponding to the $k^{th}$ smallest element in the original array, would lie in the larger of the two sub-arrays. This means that the running time on the array $A$ of length $n$ can be bounded as $T(n)  \le \max\{ T(\text{length}(B)), T(\text{length}(C)) \} + O(n)$.
 
-\part \begin{equation*}
-\begin{aligned}
-\text{Let } k &= 7 \text{ and}\\
-A &= \{6,2,5,4,3,1,9\} \\
-B&=\{1\} \text{ and } C=\{6,2,5,4,3,9\} \text{ when } i=6\\
-\text{Since }&length(B)=1<k\text{, we need to find the } 7-1=6^{th} \text{ smallest element in } C\\ 
-\{2\} \text{ and } &\{6,5,4,3,9\} \text{ are the two sub-arrays when } i=2\\
-\text{Since }&length(B)=1<6\text{, we need to find the } 7-1=6^{th} \text{ smallest element in } C\\ 
-\end{aligned}
-\end{equation*}
+\part Let $k = 7$ and $A = \{6,2,5,4,3,1,9\}$ \\
+$B=\{1\}$ and $C=\{6,2,5,4,3,9\}$ when $i=6$\\
+Since length(B)$=1<k$, we need to find the $7-1=6^{th}$ smallest element in $C$\\ 
+$\{2\}$ and $\{6,5,4,3,9\}$ are the two sub-arrays when $i=2$\\
+Since length(first sub-array)$=1<6$, we need to find the $6-1=5^{th}$ smallest element in the second sub-array\\ 
+$\{3\}$ and $\{6,5,4,9\}$ are the two sub-arrays when $i=4$\\
+Since length(first sub-array)$=1<5$, we need to find the $5-1=4^{th}$ smallest element in the second sub-array\\ 
+$\{4\}$ and $\{6,5,9\}$ are the two sub-arrays when $i=3$\\
+Since length(first sub-array)$=1<4$, we need to find the $4-1=3^{rd}$ smallest element in the second sub-array\\ 
+$\{5\}$ and $\{6,9\}$ are the two sub-arrays when $i=2$\\
+Since length(first sub-array)$=1<3$, we need to find the $3-1=2^{nd}$ smallest element in the second sub-array\\ 
+$\{6\}$ and $\{9\}$ are the two sub-arrays when $i=1$\\
+Since length(first sub-array)$=1<2$, we need to find the $2-1=1^{st}$ smallest element in the second sub-array\\ 
+We get $9$ as the answer, which is the $k = 7^{th}$ smallest element in the original array $A = \{6,2,5,4,3,1,9\}$\\
 
+If we add up the lengths of the arrays worked on, each in $O(n)$ time, we get $7+6+5+4+3+2=27>\frac{n^2}{4}=\frac{7^2}{4}=\frac{49}{4}=12.25$.
 \part
 
 \end{parts}
