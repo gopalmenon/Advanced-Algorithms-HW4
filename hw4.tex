@@ -188,6 +188,37 @@ Recall the quicksort procedure we saw in class, where we pick a random element o
 \part[2] Explain your observations intuitively.
 \end{parts}
 
+\begin{parts}
+
+\part The constant that was computed for various random integer array sizes for runtimes averaged over $20$ iterations is shown below
+\begin{center}
+  \begin{tabular}{ |c |c|}
+    \hline
+    Array Size &  Constant\\ \hline
+   $10^5$& $5.21\times 10^{-6}$  \\ \hline
+   $10^6$& $3.47\times 10^{-6}$  \\ \hline
+   $10^7$& $2.74\times 10^{-6}$  \\ \hline
+   $10^8$& $2.69\times 10^{-6}$  \\ \hline
+  \end{tabular}
+\end{center}
+
+\part The value of the constant for various array sizes is shown below
+
+\begin{center}
+  \begin{tabular}{ |c |c|c|c|}
+    \hline
+    Array Size &  $k=1$ & $k=2$ & $k=3$\\ \hline
+   $10^5$ & $6.08\times 10^{-6}$  & $6.08\times 10^{-6}$ & $6.95\times 10^{-6} $\\ \hline
+   $10^6$ & $4.85\times 10^{-6}$  & $5.14\times 10^{-6} $&   $5.57\times 10^{-6} $ \\ \hline
+   $10^7$ & $4.20\times 10^{-6}$  & $4.52\times 10^{-6} $& $4.98\times 10^{-6} $   \\ \hline
+   $10^8$ & $3.63\times 10^{-6}$  & $4.17\times 10^{-6} $&   $4.43\times 10^{-6} $ \\ \hline
+  \end{tabular}
+\end{center}
+
+\part The value of the constant is least for the case of the single random pivot and higher for the cases where a median of random elements is used as a pivot. It looks like the work involved in computing the median of elements negated the expected boost in performance from choosing a supposedly better pivot. The more the elements that a pivot is chosen from, the higher the value of the constant and the run time. The best performance was from choosing a single random pivot as it involved minimum extra work and performance was good as it was improbable that many pivots would be bad and adversely impact run time.
+
+\end{parts}
+
 \titledquestion{Checking matrix multiplication}
 Matrix multiplication is one of the classic algorithmic problems.  Consider the problem of multiplying two $n \times n$ matrices over the field $\mathbf{F}_2$ (i.e., we have matrices with entries $0/1$, and we perform all computations modulo $2$; e.g., 0*0 + 1*1 + 1*1 + 1*0 = 0).
 
