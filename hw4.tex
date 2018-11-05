@@ -230,6 +230,54 @@ The best known algorithms here are messy and take time $O(n^{2.36...})$.  Howeve
 \part[2] Show how to improve the success probability to $7/8$ while still having running time $O(n^2)$.
 \end{parts}
 
+\begin{parts}
+
+\part If $a$ and $b$ can be any vectors $\in \{0,1\}^n$ and $x$ is also $\in \{0,1\}^n$ with each coordinate is chosen uniformly at random, then the probability of any term $a_i\times x_i$ or $b_i\times x_i$ where $0\leq i \leq n$ in the inner product being $0$ is $\frac{3}{4}$ corresponding to the pairs $\{00, 01, 10\}$. The probability of any term being $1$ is $1-\frac{3}{4}=\frac{1}{4}$.
+
+
+Consider any vector $\in \{0,1\}^n$. Following is an inductive proof for the statement that the number of vectors with odd $1$'s is the same as the number of vectors with even $1$'s. Consider a $1$-digit vector. It is clear that the statement is true with the only two possible cases being $0$ and $1$. Assume that the statement is true for a vector of length $k$. If we take the set of all $k$-dimensional vectors with odd number of $1$'s and create two sets - one by adding $1$ to the beginning of each element in the set and another by adding $0$ to the beginning of each element in the set to create two sets - the first with even number of $1$'s and the second with odd number of $1$'s. These two sets will be the same size. We can repeat the exercise by taking the set of all $k$-dimensional vectors with even number of $1$'s. So we will have two sets of the same size of $k$ - one with odd number of $1$'s and the other with even number of $1$'s. So the statement is true for $k+1$ length vectors whenever it is true for $k$ length vectors. So we have inductively proved the statement.
+
+Even though the number of inner products with an odd number of $1$'s in the terms is the same as the number of inner products with an even number of $1$'s in the terms, due to the fact that the probability of an inner product term being $1$ is less than the term being $0$, the probability of the inner product having an odd number of terms will be less than the probability of the inner product having an even number of terms. The odd probability can be found by adding the probability of each odd number between $0$ and $n$. The probability of an inner product having $k$ number of odd terms in an inner product of two n-digit vectors being ${n\choose k } \left (\frac{1}{4}\right )^k \left ( \frac{3}{4} \right ) ^{n-k}$. The even probability can be similarly found. 
+
+
+Let the probability of an inner product having an odd number of $1$'s be $\frac{a}{b}$, where $\frac{a}{b}<\frac{1}{2}$. The the probability of the inner product having an even number of $1$'s is $1-\frac{a}{b}$. For two inner product mod $2$ to be equal, they both need to have odd number of $1$'s or both need to have even number of $1$'s.
+
+\begin{equation*}
+\begin{aligned}
+\Pr \left [ \text{both have odd number of  } 1\text{'s or both have even number of } 1\text{'s} \right ]  &= \frac{a}{b}\frac{a}{b} + \left (1-\frac{a}{b} \right )\left (1-\frac{a}{b} \right )\\
+&= \frac{2a^2-2ab +b^2}{b^2} 
+\end{aligned}
+\end{equation*}
+
+If we make $\frac{2a^2-2ab +b^2}{b^2} =\frac{1}{2}$
+
+\begin{equation*}
+\begin{aligned}
+\frac{2a^2-2ab +b^2}{b^2} &=\frac{1}{2}\\
+4a^2-4ab +2b^2 &= b^2\\
+4a^2-4ab +b^2 &= 0\\
+(2a-b)^2 &=0\\
+\frac{a}{b} &= \frac{1}{2}
+\end{aligned}
+\end{equation*}
+
+Since we know that $\frac{a}{b}<\frac{1}{2}$, the above result is a contradiction and this means that $\Pr [ \langle a, x\rangle = \langle b, x\rangle~ (\text{mod } 2)] \neq 1/2$
+
+\part Although I was not able to prove that $\Pr [ \langle a, x\rangle = \langle b, x\rangle~ (\text{mod } 2)] = 1/2$. I will use this to be a known fact for the purposes of this part.
+
+Using Freivalds' algorithm \cite{matrix}, create a random binary vector $x \in \{0,1\}^n$ (one in which each coordinate is chosen uniformly at random). $A$ and $B$ are the two $n \times n$ matrices over the field $\mathbf{F}_2$. Evaluate $P=A \times \left ( B x \right ) - Cx$. If $P=\{0\}^n$, we output \textit{true} signifying that $AB=C$, else we output \textit{false}.
+
+
+When $AB=C$, $\Pr \left [ P=\{0\}^n \right ] = 1$ since any value of $x$ will result in $P=A \times \left ( B x \right ) - Cx$.
+
+When $AB \neq C$, for $P$ to be $\{0\}^n$, we would need every element in $A \times \left ( B x \right )$ to be the same as the corresponding element in $Cx$ mod $2$. Since $A \times \left ( B x \right ) = \left ( A \times B\right ) x  $, $\Pr \left [ P=\{0\}^n \right ] = \left (\frac{1}{2} \right ) ^n$, since every element in vector $\left ( A \times B\right ) x  $ would need to be the same as every element in vector $Cx$ mod $2$. Each of these will be equal with probability $\frac{1}{2}$ as per part a above. And for all of them to be equal, it will be $\left (\frac{1}{2} \right ) ^n$. So for the case when $n=2$, $\Pr \left [ P=\{0\}^n \right ] = \left (\frac{1}{2} \right ) ^n = \frac{1}{4}$ or in other words the success probability is $1-\frac{1}{4}=\frac{3}{4}$. In the general case the success probability is therefore $]\geq \frac{1}{2}$.
+
+To compute vector $Bx$, we would need to do $n$ inner products and each inner product will take $n$ work. So time complexity will be $O(n^2)$. Then to compute $A \times \left ( B x \right )$, where we multiply matrix $A$ with vector $Bx$, the time complexity will again be $O(n^2)$. To compute $P=A \times \left ( B x \right ) - Cx$ after this, we would need to do $O(n^2)$ work to compute $Cx$ and then $n$ subtractions. So total time complexity is $O(n^2)$. 
+
+\part To improve the success probability to $7/8$ while still having running time $O(n^2)$, repeat the algorithm described in part b three times and output \textit{true} signifying that $AB=C$ only if $P=\{0\}^n$ each of these three times. So for the algorithm to output true when $AB \neq C$, the probability would be $\leq \left ( \frac{1}{2} \right ) ^3 = \frac{1}{8}$. The success probability will be $\geq 1-\frac{1}{8}=\frac{7}{8}$. The time complexity will still be $O(n^2)$ even with repeating an $O(n^2)$ algorithm $3$ times.
+
+\end{parts}
+
 \titledquestion{Coloring graphs}
 One of the popular problems in graph theory is that of graph coloring: we are given an undirected graph $G = (V, E)$, and the aim is to assign each vertex $u$ a {\em color} $c(u)$, with the guarantee that for any edge $u, v$, $c(u) \ne c(v)$.  (i.e., end-points of edges must receive different colors.) The goal is to color the graph using the fewest total number of colors, subject to the above condition.
 
