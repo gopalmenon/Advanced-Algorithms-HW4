@@ -65,7 +65,8 @@ Consider the process we saw in class, of distributing $n$ balls into $n$ bins, i
 &= \sum_{i=1}^n \left ( 1 \times \Pr \left [ X_i =1 \right ]  + 0 \times \Pr \left [ X_i =0 \right ] \right )\\
 &= \sum_{i=1}^n \Pr \left [ X_i =1 \right ] \\ 
 &= \sum_{i=1}^n \frac{(n-1)^n}{n^n} \\
-\text{since } n \text{ balls can be put into } &n-1 \text{ slots in } (n-1)^n \text{ ways and } n \text{ balls can be put into } n \text{ slots in } n^n \text{different ways}\\
+\text{since } n \text{ balls can be put into } &n-1 \text{ slots in } (n-1)^n \text{ ways}\\
+\text{ and } n \text{ balls can be put into } &n \text{ slots in } n^n \text{different ways}\\
 &= n \frac{(n-1)^n}{n^n} \\
 &= \frac{(n-1)^n}{n^{n-1}}
 \end{aligned}
@@ -155,9 +156,9 @@ $\{6\}$ and $\{9\}$ are the two sub-arrays when $i=1$\\
 Since length(first sub-array)$=1<2$, we need to find the $2-1=1^{st}$ smallest element in the second sub-array\\ 
 We get $9$ as the answer, which is the $k = 7^{th}$ smallest element in the original array $A = \{6,2,5,4,3,1,9\}$\\
 
-If we add up the lengths of the arrays worked on, each in $O(n)$ time, we get $7+6+5+4+3+2=27>\frac{n^2}{4}=\frac{7^2}{4}=\frac{49}{4}=12.25$.
+If we add up the lengths of the arrays worked on, we get $7+6+5+4+3+2=27>\frac{n^2}{4}=\frac{7^2}{4}=\frac{49}{4}=12.25$.
 
-\part Consider the base case of an array of length $0$. $T(1)=O(1)$ since it takes constant time to kind the $1^{st}$ smallest element in the array. Since the recurrence is bounded as 
+\part Consider the base case of an array of length $1$. $T(1)=O(1)$ since it takes constant time to find the $1^{st}$ smallest element in the array. Since the recurrence is bounded as 
 \[ T(n)  \le \max\{ T(\text{length}(B)), T(\text{length}(C)) \} + O(n). \]
 
 Consider the case where array $B$ has a length of $n-r$ and array $C$ has a length on $r$. The recurrence will be
@@ -167,7 +168,7 @@ Consider the case where array $B$ has a length of $n-r$ and array $C$ has a leng
 \begin{aligned}
 \mathbb{E} \left [ T(n) \right ] & \leq \sum_{r=0}^n \Pr \left [ r \right ] \left (\max\{ T(n-r), T(r) \} + O(n) \right ), \text{(} r \text{ starts at } 0 \text{ when largest element is chosen)}\\
 &= \sum_{r=0}^n \frac{1}{n} \left (\max\{ T(n-r), T(r) \} + O(n) \right ) \text{, since the probability of any } r \text{ is } \frac{1}{n}\\
-&= \sum_{r=0}^n \frac{1}{n} \left (\max\{ O(n-r), T(r) \} + O(n) \right ) \text{, assuming }T(n-r) = O(n-r) \text{ and } T(r)=O(r)\\
+&= \sum_{r=0}^n \frac{1}{n} \left (\max\{ O(n-r), O(r) \} + O(n) \right ) \text{, assuming }T(n-r) = O(n-r) \text{ and } T(r)=O(r)\\
 &= \sum_{r=0}^n \frac{1}{n} \left (\max\{(n-r), r \} + n \right )\text{, taking the constant to be } 1\\
 &= \frac{1}{n} \left (2\left(\frac{n(n+1)}{2} - \frac{\frac{n}{2}(\frac{n}{2}+1)}{2} \right ) + n^2 \right ) \text{, as we take the larger sub-array for worst case}\\
 &= \frac{1}{n} \left ( n^2 + n - \frac{n^2}{4} -\frac{n}{2} + n^2 \right )\\
@@ -235,33 +236,33 @@ The best known algorithms here are messy and take time $O(n^{2.36...})$.  Howeve
 \part If $a$ and $b$ can be any vectors $\in \{0,1\}^n$ and $x$ is also $\in \{0,1\}^n$ with each coordinate is chosen uniformly at random, then the probability of any term $a_i\times x_i$ or $b_i\times x_i$ where $0\leq i \leq n$ in the inner product being $0$ is $\frac{3}{4}$ corresponding to the pairs $\{00, 01, 10\}$. The probability of any term being $1$ is $1-\frac{3}{4}=\frac{1}{4}$.
 
 
-Consider any vector $\in \{0,1\}^n$. Following is an inductive proof for the statement that the number of vectors with odd $1$'s is the same as the number of vectors with even $1$'s. Consider a $1$-digit vector. It is clear that the statement is true with the only two possible cases being $0$ and $1$. Assume that the statement is true for a vector of length $k$. If we take the set of all $k$-dimensional vectors with odd number of $1$'s and create two sets - one by adding $1$ to the beginning of each element in the set and another by adding $0$ to the beginning of each element in the set to create two sets - the first with even number of $1$'s and the second with odd number of $1$'s. These two sets will be the same size. We can repeat the exercise by taking the set of all $k$-dimensional vectors with even number of $1$'s. So we will have two sets of the same size of $k$ - one with odd number of $1$'s and the other with even number of $1$'s. So the statement is true for $k+1$ length vectors whenever it is true for $k$ length vectors. So we have inductively proved the statement.
+I got the hint for the following recurrence from math.stackexchange.com. But I can't find the page now to list as a reference.
 
-Even though the number of inner products with an odd number of $1$'s in the terms is the same as the number of inner products with an even number of $1$'s in the terms, due to the fact that the probability of an inner product term being $1$ is less than the term being $0$, the probability of the inner product having an odd number of terms will be less than the probability of the inner product having an even number of terms. The odd probability can be found by adding the probability of each odd number between $0$ and $n$. The probability of an inner product having $k$ number of odd terms in an inner product of two n-digit vectors being ${n\choose k } \left (\frac{1}{4}\right )^k \left ( \frac{3}{4} \right ) ^{n-k}$. The even probability can be similarly found. 
+Let $a_N$ be the probability that a product of two random binary vectors has an even number of $1$'s. This happens when for the first term to be summed in the inner product is $0$ followed by an even number of $1$'s, or the other way round. We can see that $a_0=1$ and for $N\geq 1$
 
+$$
+a_N = p_0 a_{N-1} + p_1 (1-a_{N-1})
+$$
 
-Let the probability of an inner product having an odd number of $1$'s be $\frac{a}{b}$, where $\frac{a}{b}<\frac{1}{2}$. The the probability of the inner product having an even number of $1$'s is $1-\frac{a}{b}$. For two inner product mod $2$ to be equal, they both need to have odd number of $1$'s or both need to have even number of $1$'s.
+where $p_0$ is the probability of a term in the dot product being $0$ and $p_1$ is the probability of a term in the dot product being $1$. The solution to this recurrence can be shown to be equal to the following by induction
+
+$$
+a_N = \frac{1}{2} + \frac{(p_0-p_1)^N}{2}
+$$
+
+For the base case where $N=0$, we get $a_0 = \frac{1}{2} + \frac{(p_0-p_1)^0}{2} = \frac{1}{2}  + \frac{1}{2} =1$. Let us assume that this is true for $N-1$. Then 
 
 \begin{equation*}
 \begin{aligned}
-\Pr \left [ \text{both have odd number of  } 1\text{'s or both have even number of } 1\text{'s} \right ]  &= \frac{a}{b}\frac{a}{b} + \left (1-\frac{a}{b} \right )\left (1-\frac{a}{b} \right )\\
-&= \frac{2a^2-2ab +b^2}{b^2} 
+a_N &= p_0 \left ( \frac{1}{2} + \frac{(p_0-p_1)^{N-1}}{2} \right ) + p_1 \left (1-\left ( \frac{1}{2} + \frac{(p_0-p_1)^{N-1}}{2} \right ) \right )\\
+&= \frac{p_0+p_1}{2} + \left ( p_0 - p_1 \right ) \frac{(p_0-p_1)^{N-1}}{2}\\
+&= \frac{1}{2} + \frac{(p_0-p_1)^N}{2} \text{, which proves the recurrence}\\
+&= \frac{1}{2} + \frac{(\frac{3}{4}-\frac{1}{4})^N}{2} \text{, by plugging in }p_0 =\frac{3}{4} \text { and }p_1=\frac{1}{4}\\
+&= \frac{1}{2} + \frac{\frac{1}{2}^N}{2}\\
+& \neq \frac{1}{2}
 \end{aligned}
 \end{equation*}
 
-If we make $\frac{2a^2-2ab +b^2}{b^2} =\frac{1}{2}$
-
-\begin{equation*}
-\begin{aligned}
-\frac{2a^2-2ab +b^2}{b^2} &=\frac{1}{2}\\
-4a^2-4ab +2b^2 &= b^2\\
-4a^2-4ab +b^2 &= 0\\
-(2a-b)^2 &=0\\
-\frac{a}{b} &= \frac{1}{2}
-\end{aligned}
-\end{equation*}
-
-Since we know that $\frac{a}{b}<\frac{1}{2}$, the above result is a contradiction and this means that $\Pr [ \langle a, x\rangle = \langle b, x\rangle~ (\text{mod } 2)] \neq 1/2$
 
 \part Although I was not able to prove that $\Pr [ \langle a, x\rangle = \langle b, x\rangle~ (\text{mod } 2)] = 1/2$. I will use this to be a known fact for the purposes of this part.
 
