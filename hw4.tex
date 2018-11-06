@@ -259,7 +259,15 @@ a_N &= p_0 \left ( \frac{1}{2} + \frac{(p_0-p_1)^{N-1}}{2} \right ) + p_1 \left 
 &= \frac{1}{2} + \frac{(p_0-p_1)^N}{2} \text{, which proves the recurrence}\\
 &= \frac{1}{2} + \frac{(\frac{3}{4}-\frac{1}{4})^N}{2} \text{, by plugging in }p_0 =\frac{3}{4} \text { and }p_1=\frac{1}{4}\\
 &= \frac{1}{2} + \frac{\frac{1}{2}^N}{2}\\
-& \neq \frac{1}{2}
+\Pr [ \langle a, x\rangle = \langle b, x\rangle~ (\text{mod } 2)] &= \Pr \left [ \text{both inner products terms have odd } 1 \text{'s}  \text{ or both have even } 1 \text{'s}  \right ]\\
+&= a_Na_N + (1-a_N)(1-a_N)\\ 
+&= a_N^2 + 1 -2a_N + a_N^2\\
+&= 2a_N^2 -2a_N + 1 = \frac{1}{2} \text{, make this assumption for the time being}\\
+\Rightarrow 2a_N^2 -2a_N +\frac{1}{2} &= 0\\
+4a_N^2 -4a_N +1&=0\\
+(2a_N-1)^2 &= 0\\
+a_N &= \frac{1}{2} \text{, which cannot be true by } a_N \text{ given above}\\
+\Rightarrow \Pr [ \langle a, x\rangle = \langle b, x\rangle~ (\text{mod } 2)] &\neq \frac{1}{2} 
 \end{aligned}
 \end{equation*}
 
